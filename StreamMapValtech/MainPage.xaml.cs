@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StreamMapValtech.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,8 @@ namespace StreamMapValtech
         public MainPage()
         {
             this.InitializeComponent();
+
+            planUserControl.DataContext = new PlanVM();
         }
     }
 }
