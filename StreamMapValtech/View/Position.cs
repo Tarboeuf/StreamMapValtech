@@ -14,6 +14,8 @@ namespace StreamMapValtech.View
         PositionVM _position;
         PlanCanvas _canvas;
 
+        public int IdPosition { get; set; }
+
         public Position()
         {
 
@@ -24,13 +26,24 @@ namespace StreamMapValtech.View
             _position = position;
             _canvas = canvas;
 
-            X = position.X * canvas.ActualWidth;
-            Y = position.Y * canvas.ActualHeight;
-            OldX = position.OldX * canvas.ActualWidth;
-            OldY = position.OldY * canvas.ActualHeight;
+            position.PropertyChanged += Position_PropertyChanged;
+
+            UpdateProperties();
+            IdPosition = position.Id;
         }
 
+        private void Position_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            UpdateProperties();
+        }
 
+        private void UpdateProperties()
+        {
+            X = _position.X * _canvas.ActualWidth;
+            Y = _position.Y * _canvas.ActualHeight;
+            OldX = _position.OldX * _canvas.ActualWidth;
+            OldY = _position.OldY * _canvas.ActualHeight;
+        }
 
         #region position
 
@@ -73,6 +86,32 @@ namespace StreamMapValtech.View
         // Using a DependencyProperty as the backing store for OldY.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty OldYProperty =
             DependencyProperty.Register("OldY", typeof(double), typeof(Position), new PropertyMetadata(0d));
+
+
+
+        public double BigCircle
+        {
+            get { return (double)GetValue(BigCircleProperty); }
+            set { SetValue(BigCircleProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for BigCircle.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BigCircleProperty =
+            DependencyProperty.Register("BigCircle", typeof(double), typeof(Position), new PropertyMetadata(8d));
+
+
+
+        public double SmallCircle
+        {
+            get { return (double)GetValue(SmallCircleProperty); }
+            set { SetValue(SmallCircleProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SmallCircle.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SmallCircleProperty =
+            DependencyProperty.Register("SmallCircle", typeof(double), typeof(Position), new PropertyMetadata(2d));
+        
+
 
         #endregion
     }

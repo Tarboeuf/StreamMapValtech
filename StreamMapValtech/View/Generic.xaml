@@ -2,18 +2,39 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:StreamMapValtech.View">
+    <local:MiddleConverter x:Key="MiddleConverter"/>
 
     <Style TargetType="local:Position" >
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:Position">
-                    <Grid>
+                    <Canvas>
                         <Line X1="{TemplateBinding X}" Y1="{TemplateBinding Y}" 
                               X2="{TemplateBinding OldX}" Y2="{TemplateBinding OldY}" 
                               Stroke="Black" StrokeThickness="0.5" />
-                        <Ellipse Width="8" Height="8" Canvas.Left="{TemplateBinding X}" Canvas.Top="{TemplateBinding Y}" StrokeThickness="1" Stroke="Black" Fill="White"/>
-                        <Ellipse Width="2" Height="2" Canvas.Left="{TemplateBinding OldX}" Canvas.Top="{TemplateBinding OldY}" StrokeThickness="1" Stroke="Black"/>
-                    </Grid>
+                        <Ellipse Width="{TemplateBinding BigCircle}"
+                                 Height="{TemplateBinding BigCircle}" 
+                                 Canvas.Left="{TemplateBinding X}" 
+                                 Canvas.Top="{TemplateBinding Y}" 
+                                 StrokeThickness="1" Stroke="Black" Fill="White">
+                            <Ellipse.RenderTransform>
+                                <TranslateTransform 
+                                    X="{Binding BigCircle, Converter={StaticResource MiddleConverter}, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    Y="{Binding BigCircle, Converter={StaticResource MiddleConverter}, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                            </Ellipse.RenderTransform>
+                        </Ellipse>
+                        <Ellipse Width="{TemplateBinding SmallCircle}" Height="{TemplateBinding SmallCircle}"
+                                 Canvas.Left="{TemplateBinding OldX}" 
+                                 Canvas.Top="{TemplateBinding OldY}" 
+                                 StrokeThickness="1" 
+                                 Stroke="Black">
+                            <Ellipse.RenderTransform>
+                                <TranslateTransform 
+                                    X="{Binding SmallCircle, Converter={StaticResource MiddleConverter}, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    Y="{Binding SmallCircle, Converter={StaticResource MiddleConverter}, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                            </Ellipse.RenderTransform>
+                        </Ellipse>
+                    </Canvas>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

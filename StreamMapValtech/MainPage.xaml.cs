@@ -23,11 +23,24 @@ namespace StreamMapValtech
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private PlanVM _currentPlan = new PlanVM();
+
         public MainPage()
         {
             this.InitializeComponent();
 
-            planUserControl.DataContext = new PlanVM();
+            planUserControl.DataContext = _currentPlan;
+
+
+            DispatcherTimer dt = new DispatcherTimer();
+            dt.Interval = TimeSpan.FromMilliseconds(500);
+            dt.Tick += Dt_Tick;
+            dt.Start();
+        }
+
+        private void Dt_Tick(object sender, object e)
+        {
+            _currentPlan.GenererCommand.Execute(null);
         }
     }
 }

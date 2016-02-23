@@ -24,7 +24,17 @@ namespace StreamMapValtech.View
 
         private static void ItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((PlanCanvas)d).RefreshSource();
+            ((PlanCanvas)d).ItemsSourceChanged();
+        }
+        private void ItemsSourceChanged()
+        {
+            RefreshSource();
+            ItemsSource.CollectionChanged += ItemsSource_CollectionChanged;
+        }
+
+        private void ItemsSource_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            RefreshSource();
         }
 
         public PlanCanvas()
@@ -37,15 +47,16 @@ namespace StreamMapValtech.View
             RefreshSource();
         }
         
-
         public void RefreshSource()
         {
             Children.Clear();
-            foreach (var item in ItemsSource)
+            if (null != ItemsSource)
             {
-                Children.Add(new Position(item, this));
+                foreach (var item in ItemsSource)
+                {
+                    Children.Add(new Position(item, this));
+                }
             }
         }
-
     }
 }

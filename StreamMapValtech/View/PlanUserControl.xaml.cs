@@ -23,5 +23,11 @@ namespace StreamMapValtech.View
         {
             this.InitializeComponent();
         }
+
+        private void Image_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            canvas.Width = imagePlan.ActualWidth;
+            canvas.Height= imagePlan.ActualHeight;
+        }
     }
 }

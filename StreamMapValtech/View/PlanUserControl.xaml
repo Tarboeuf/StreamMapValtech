@@ -16,10 +16,10 @@
         </Grid.RowDefinitions>
         <TextBlock Text="{Binding Name, FallbackValue='Nom du plan'}" Style="{StaticResource HeaderTextBlockStyle}" />
         <Grid Grid.Row="1">
-            <Image  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{Binding Image}" />
-            <local:PlanCanvas x:Name="canvas" ItemsSource="{Binding Positions}">
-                
-            </local:PlanCanvas>
+            <Image Name="imagePlan" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{Binding Image}" SizeChanged="Image_SizeChanged"/>
+            <local:PlanCanvas x:Name="canvas" ItemsSource="{Binding Positions}" />
+
+            <Button HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="Générer Points" Command="{Binding GenererCommand}" />
         </Grid>
     </Grid>
 </UserControl>
